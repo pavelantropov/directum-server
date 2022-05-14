@@ -7,17 +7,11 @@ public class LocalizationFactory : ILocalizationFactory
 {
     private readonly List<IDataSource> _sources = new ();
 
-    public string? GetString(string code, CultureInfo? culture)
+    public string? GetString(string code, CultureInfo? culture = null)
     {
         culture ??= CultureInfo.CurrentCulture;
 
-        string? localizedString = null;
-
-        foreach (var source in _sources)
-        {
-            localizedString = source.GetString(code, culture);
-            if (localizedString != null) break;
-        }
+        var localizedString = _sources.FirstOrDefault(s => s.CheckIfCultureSupported(culture))?.GetString(code, culture);
         
         return localizedString;
     }

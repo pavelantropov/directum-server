@@ -19,11 +19,12 @@ namespace ServerAppTests
         }
 
         [Test]
-        public void GetString_CallsGetStringOfDataSource()
+        public void GetString_CultureSupported_CallsGetStringOfDataSource()
         {
             const string code = "test";
             var culture = CultureInfo.InvariantCulture;
 
+            _sourceMock.Setup(m => m.CheckIfCultureSupported(culture)).Returns(true);
             _factory.RegisterSource(_sourceMock.Object);
 
             _factory.GetString(code, culture);
@@ -34,14 +35,46 @@ namespace ServerAppTests
         }
 
         [Test]
-        public void GetString_ReturnsExpectedResult()
+        public void GetString_CultureNotSupported_DoesNotCallGetStringOfDataSource()
+        {
+            const string code = "test";
+            var culture = CultureInfo.InvariantCulture;
+
+            _sourceMock.Setup(m => m.CheckIfCultureSupported(culture)).Returns(false);
+            _factory.RegisterSource(_sourceMock.Object);
+
+            _factory.GetString(code, culture);
+
+            _sourceMock.Verify(
+                m => m.GetString(code, culture), 
+                Times.Never());
+        }
+
+        [Test]
+        public void GetString_CultureSupported_ReturnsExpectedResult()
         {
             const string expected = "TEST";
             const string code = "test";
             var culture = CultureInfo.InvariantCulture;
 
+            _sourceMock.Setup(m => m.CheckIfCultureSupported(culture)).Returns(true);
             _sourceMock.Setup(m => m.GetString(code, culture))
                 .Returns(expected);
+            _factory.RegisterSource(_sourceMock.Object);
+
+            var result = _factory.GetString(code, culture);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void GetString_CultureNotSupported_ReturnsNull()
+        {
+            const string? expected = null;
+            const string code = "test";
+            var culture = CultureInfo.InvariantCulture;
+
+            _sourceMock.Setup(m => m.CheckIfCultureSupported(culture)).Returns(false);
             _factory.RegisterSource(_sourceMock.Object);
 
             var result = _factory.GetString(code, culture);

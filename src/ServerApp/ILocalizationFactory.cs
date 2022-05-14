@@ -5,6 +5,6 @@ namespace ServerApp;
 
 public interface ILocalizationFactory
 {
-    string? GetString(string code, CultureInfo culture);
+    string? GetString(string code, CultureInfo? culture = null);
     void RegisterSource(IDataSource source);
 }
