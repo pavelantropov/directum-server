@@ -4,16 +4,22 @@ using ServerApp.Data;
 
 // Change these the way you need
 const string code = "hello";
-var cultureEn = CultureInfo.InvariantCulture;
-var cultureEs = CultureInfo.GetCultureInfo("es-ES");
-var cultureFr = CultureInfo.GetCultureInfo("fr-FR");
+var cultures = new[]
+{
+    CultureInfo.InvariantCulture,
+    CultureInfo.GetCultureInfo("es-ES"),
+    CultureInfo.GetCultureInfo("fr-FR")
+};
 
 var factory = new LocalizationFactory();
 
 // Register the sources
 factory.RegisterSource(new ResourcesDataSource());
 
-Console.WriteLine($@"{cultureEn.EnglishName}: {factory.GetString(code, cultureEn)}");
-Console.WriteLine($@"{cultureEs.EnglishName}: {factory.GetString(code, cultureEs)}");
-Console.WriteLine($@"{cultureFr.EnglishName}: {factory.GetString(code, cultureFr)}");
+// Print the results
+foreach (var culture in cultures)
+{
+    Console.WriteLine($@"{culture.EnglishName}: {factory.GetString(code, culture)}");
+}
+
 Console.ReadKey();

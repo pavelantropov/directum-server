@@ -20,4 +20,9 @@ public class LocalizationFactory : ILocalizationFactory
     {
         _sources.Add(source);
     }
+
+    public void UnregisterSource(IDataSource source)
+    {
+        _sources.Remove(source);
+    }
 }

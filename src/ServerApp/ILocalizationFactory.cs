@@ -7,4 +7,5 @@ public interface ILocalizationFactory
 {
     string? GetString(string code, CultureInfo? culture = null);
     void RegisterSource(IDataSource source);
+    void UnregisterSource(IDataSource source);
 }
