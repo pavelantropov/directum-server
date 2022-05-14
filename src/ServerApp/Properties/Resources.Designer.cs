@@ -61,11 +61,11 @@ namespace ServerApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1.
+        ///   Looks up a localized string similar to Hello world!.
         /// </summary>
-        internal static string String1 {
+        internal static string hello {
             get {
-                return ResourceManager.GetString("String1", resourceCulture);
+                return ResourceManager.GetString("hello", resourceCulture);
             }
         }
     }
