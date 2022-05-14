@@ -3,8 +3,8 @@ using ServerApp.Data;
 
 namespace ServerApp;
 
-public interface ILocalizationFactory
+public interface ILocalizationFactory2
 {
     string? GetString(string code, CultureInfo culture);
-    void RegisterSource(IDataSource source);
+    void RegisterSource(IDataSource2 source);
 }
