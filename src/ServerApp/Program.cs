@@ -4,15 +4,12 @@ using ServerApp.Data;
 
 // Change these the way you need
 const string code = "hello";
-var culture = CultureInfo.InvariantCulture;
+var culture = CultureInfo.GetCultureInfo("es-ES");
 
-var factory1 = new LocalizationFactory();
-var factory2 = new LocalizationFactory2();
+var factory = new LocalizationFactory();
 
 // Register the sources
-factory1.RegisterSource(new ResourcesDataSource());
-factory2.RegisterSource(new ResourcesDataSource2 { Culture = culture });
+factory.RegisterSource(new ResourcesDataSource());
 
-Console.WriteLine($@"1: {factory1.GetString(code, culture)}");
-Console.WriteLine($@"2: {factory2.GetString(code, culture)}");
+Console.WriteLine($@"1: {factory.GetString(code, culture)}");
 Console.ReadKey();
